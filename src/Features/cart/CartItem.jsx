@@ -1,0 +1,25 @@
+/* eslint-disable react/prop-types */
+import { formatCurrency } from '../../utils/helpers';
+import DeleteItem from './DeleteItem';
+import UpadateItemQuantity from './UpadateItemQuantity';
+import { useSelector } from 'react-redux';
+import { getCurrntQuantityById } from './cartSlice';
+
+function CartItem({ item }) {
+  const { pizzaId, name, quantity, totalPrice } = item;
+  const currQunatity = useSelector(getCurrntQuantityById(pizzaId));
+  return (
+    <li className="py-3 sm:flex sm:items-center sm:justify-between">
+      <p className="mb-1 sm:mb-0">
+        {quantity}&times; {name}
+      </p>
+      <div className="flex items-center justify-between sm:gap-6">
+        <p className="text-sm font-bold">{formatCurrency(totalPrice)}</p>
+        <UpadateItemQuantity pizzaId={pizzaId} currentQuantity={currQunatity} />
+        <DeleteItem pizzaId={pizzaId} />
+      </div>
+    </li>
+  );
+}
+
+export default CartItem;
